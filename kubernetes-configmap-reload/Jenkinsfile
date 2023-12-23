@@ -46,23 +46,23 @@ pipeline {
 	            }
 	        }
 	    }
-	 //    stage("Docker CleanUP") {
-	 //        when {
-		// 		expression { params.action == 'create' }
-		// 	}
-	 //        steps {
-	 //            dockerCleanup ( "${params.ImageName}", "${params.docker_repo}" )
-		// 	}
-		// }
+	   stage("Docker CleanUP") {
+	         when {
+		 		expression { params.action == 'create' }
+		 	}
+	         steps {
+	             dockerCleanup ( "${params.ImageName}", "${params.docker_repo}" )
+		 	}
+		 }
 			    stage("Ansible Setup") {
 	        when {
 				expression { params.action == 'create' }
 			}
-	        steps {
-	            sh 'ansible-playbook ${WORKSPACE}/kubernetes-configmap-reload/server_setup.yml'
-			}
-		}
-	    stage("Create deployment") {
+	        //steps {
+	          //  sh 'ansible-playbook ${WORKSPACE}/kubernetes-configmap-reload/server_setup.yml'
+			//}
+		//}
+	    /*stage("Create deployment") {
 			when {
 				expression { params.action == 'create' }
 			}
@@ -85,6 +85,6 @@ pipeline {
 					    kubectl delete svc ${params.AppName}
 				  """	       
 	        }
-	    }
+	   */ }
     }
 }
